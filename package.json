@@ -1,0 +1,14 @@
+{
+  "name": "moviedb",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "bartlomiejpasik@gmail.com",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.16.4"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "mocha": "^6.1.4"
+  }
+}
