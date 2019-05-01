@@ -59,3 +59,7 @@ typings/
 .yarn-integrity
 
 .idea
+
+.env
+
+build
