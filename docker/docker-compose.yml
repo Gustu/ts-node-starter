@@ -16,7 +16,7 @@ services:
       POSTGRES_PASSWORD: superpassword
       POSTGRES_DB: moviedb
     ports:
-      - 5433:5432
+      - 5434:5432
 
 
 

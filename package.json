@@ -11,7 +11,7 @@
     "test": "jest",
     "lint": "tslint -p tsconfig.json -c tslint.json",
     "typeorm": "tsc && ts-node ./node_modules/typeorm/cli -f ./ormconfig.ts",
-    "migrate": "tsc && ts-node ./node_modules/typeorm/cli -f ./ormconfig.ts migration:run",
+    "migrate": "tsc && ts-node ./node_modules/typeorm/cli -f ./ormconfig.ts migration:run && ts-node ./node_modules/typeorm/cli -f ./ormconfig-test.ts migration:run",
     "migration:generate": "ts-node ./node_modules/typeorm/cli -f ./ormconfig.ts migration:generate"
   },
   "dependencies": {
