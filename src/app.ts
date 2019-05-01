@@ -1,10 +1,10 @@
+require('dotenv').config();
 import 'reflect-metadata';
 import express from 'express';
 import bodyParser from "body-parser";
 import routes from './routes';
 import cors from 'cors';
 import logger from 'morgan';
-import {createConnection} from "typeorm";
 
 const app: express.Application = express();
 
@@ -24,21 +24,9 @@ app.use((req, res, next) => {
 
 app.use((err, req, res, next) => {
     if (err) {
-        return res.status(500).json({ message: 'Something went wrong.' });
+        return res.status(500).json({message: 'Something went wrong.'});
     }
     next();
 });
-
-const setupConnection = async () => {
-    try {
-        await createConnection();
-
-        console.log('DB connection established.');
-    } catch (err) {
-        console.log('Could not establish DB connection.', err);
-    }
-};
-
-setupConnection();
 
 export default app;
