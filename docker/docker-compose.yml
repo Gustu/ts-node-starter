@@ -9,6 +9,14 @@ services:
       POSTGRES_DB: moviedb
     ports:
       - 5433:5432
+  postgres-test:
+    image: postgres:11.2
+    environment:
+      POSTGRES_USER: moviedb
+      POSTGRES_PASSWORD: superpassword
+      POSTGRES_DB: moviedb
+    ports:
+      - 5433:5432
 
 
 

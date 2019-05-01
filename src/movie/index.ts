@@ -9,10 +9,22 @@ router.get('/', async (req, res) => {
     res.send(movies);
 });
 
+router.get('/:movieId', async (req, res) => {
+    const {movieId} = req.params;
+    const movies = await MovieRepository.getMovieById(movieId);
+    res.send(movies);
+});
+
 router.post('/', async (req, res) => {
     const {phrase} = req.body;
     const movie = await MovieService.getMovie(phrase);
-    const createdMovie = await MovieRepository.createNewMovie(movie);
+    const found = await MovieRepository.getMovieByImdbId(movie.imdbId);
+
+    if (found) {
+        return res.send(found)
+    }
+
+    const createdMovie = await MovieRepository.createMovie(movie);
     res.send(createdMovie);
 });
 
