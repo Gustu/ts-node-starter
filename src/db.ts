@@ -1,11 +1,10 @@
 import {createConnection, getConnection} from "typeorm";
 import dbOptions from '../ormconfig';
+import testDbOptions from '../ormconfig-test';
 
 export const setupTestDb = async () => {
     try {
-        const options = Object.assign(dbOptions, {url: process.env.TEST_DB_URL});
-
-        await createConnection(options);
+        await createConnection(testDbOptions);
 
         console.log('TEST DB connection established.');
     } catch (err) {
@@ -15,7 +14,7 @@ export const setupTestDb = async () => {
 
 export const clearTestDb = async () => {
     await getConnection().manager.query("truncate table movie cascade;");
-}
+};
 
 export const setupDb = async () => {
     try {

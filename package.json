@@ -7,11 +7,12 @@
   "scripts": {
     "tsc": "tsc",
     "dev": "ts-node-dev --respawn --transpileOnly ./src/server.ts",
-    "prod": "tsc && node ./build/server.js",
+    "prod": "tsc && npm run migrate && node build/src/server.js",
     "test": "jest",
     "lint": "tslint -p tsconfig.json -c tslint.json",
-    "typeorm": "tsc && ts-node ./node_modules/typeorm/cli -f ./ormconfig.ts",
-    "migrate": "tsc && ts-node ./node_modules/typeorm/cli -f ./ormconfig.ts migration:run && ts-node ./node_modules/typeorm/cli -f ./ormconfig-test.ts migration:run",
+    "migrate": "ts-node ./node_modules/typeorm/cli -f ./ormconfig.ts migration:run",
+    "migrate:test": "ts-node ./node_modules/typeorm/cli -f ./ormconfig-test.ts migration:run",
+    "migrate:all": "npm run migrate && npm run migrate:test",
     "migration:generate": "ts-node ./node_modules/typeorm/cli -f ./ormconfig.ts migration:generate"
   },
   "dependencies": {
@@ -25,6 +26,7 @@
     "cors": "^2.8.5",
     "dotenv": "^7.0.0",
     "express": "^4.16.4",
+    "forever": "^1.0.0",
     "morgan": "^1.9.1",
     "pg": "^7.10.0",
     "reflect-metadata": "^0.1.13",
