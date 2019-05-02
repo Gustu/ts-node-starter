@@ -5,10 +5,10 @@ const config: PostgresConnectionOptions = {
     url: process.env.TEST_DB_URL,
     synchronize: false,
     entities: [
-        __dirname + '/entity/**.entity{.ts,.js}'
+        __dirname + '/src/entity/**.entity{.ts,.js}'
     ],
     migrations: [
-        'build/migration/**/*.js'
+        'build/src/migration/*.js'
     ],
     cli: {
         entitiesDir: './src/entity',
