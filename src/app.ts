@@ -4,6 +4,8 @@ import bodyParser from "body-parser";
 import routes from './routes';
 import cors from 'cors';
 import logger from 'morgan';
+import {Json} from "./types";
+import {InternalServerError, NotFoundError} from "./errors";
 
 const app: express.Application = express();
 
@@ -16,14 +18,14 @@ app.use('/api', routes);
 
 app.use((req, res, next) => {
     if (!req.route) {
-        return res.status(404).json({message: 'Resource not found.'});
+        return res.status(404).json(new NotFoundError());
     }
     next();
 });
 
 app.use((err, req, res, next) => {
     if (err) {
-        return res.status(500).json({message: 'Something went wrong.'});
+        return res.status(500).json(new InternalServerError());
     }
     next();
 });

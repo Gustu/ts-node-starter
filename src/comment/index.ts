@@ -1,58 +1,59 @@
-import { Router } from 'express';
-import { CommentJSON } from '../types';
+import {Router} from 'express';
+import {CommentJSON, Json} from '../types';
 import CommentRepository from './CommentRepository';
 import Comment from '../entity/comment.entity';
+import asyncMiddleware from "../middleware/async";
 
 //////////////////////////////////////////////
 
-const restRouter = Router({ mergeParams: true });
+const restRouter = Router({mergeParams: true});
 
-restRouter.post('/', async (req, res) => {
-  const { movieId } = req.params;
-  const comment = Object.assign(new CommentJSON(), req.body, { movieId });
+restRouter.post('/', asyncMiddleware(async (req, res) => {
+    const {movieId} = req.params;
+    const comment = Object.assign(new CommentJSON(), req.body, {movieId});
 
-  const newComment = await CommentRepository.createComment(
-    Comment.fromJSON(comment)
-  );
+    const newComment = await CommentRepository.createComment(
+        Comment.fromJSON(comment)
+    );
 
-  res.send(newComment);
-});
+    res.send(Json.ok(newComment));
+}));
 
-restRouter.get('/', async (req, res) => {
-  const { movieId } = req.params;
+restRouter.get('/', asyncMiddleware(async (req, res) => {
+    const {movieId} = req.params;
 
-  const comments = await CommentRepository.getMovieComments(movieId);
+    const comments = await CommentRepository.getMovieComments(movieId);
 
-  res.send(comments);
-});
+    res.send(Json.ok(comments));
+}));
 
 //////////////////////////////////////////////
 
 const router = Router();
 
-router.get('/', async (req, res) => {
-  const { movieId } = req.query;
-  let comments = [];
+router.get('/', asyncMiddleware(async (req, res) => {
+    const {movieId} = req.query;
+    let comments = [];
 
-  if (movieId) {
-    comments = await CommentRepository.getMovieComments(movieId);
-  } else {
-    comments = await CommentRepository.getAllComments();
-  }
+    if (movieId) {
+        comments = await CommentRepository.getMovieComments(movieId);
+    } else {
+        comments = await CommentRepository.getAllComments();
+    }
 
-  res.send(comments);
-});
+    res.send(Json.ok(comments));
+}));
 
-router.post('/', async (req, res) => {
-  const comment = Object.assign(new CommentJSON(), req.body);
+router.post('/', asyncMiddleware(async (req, res) => {
+    const comment = Object.assign(new CommentJSON(), req.body);
 
-  const newComment = await CommentRepository.createComment(
-    Comment.fromJSON(comment)
-  );
+    const newComment = await CommentRepository.createComment(
+        Comment.fromJSON(comment)
+    );
 
-  res.send(newComment);
-});
+    res.send(Json.ok(newComment));
+}));
 
 //////////////////////////////////////////////
 
-export default { restRouter, router };
+export default {restRouter, router};

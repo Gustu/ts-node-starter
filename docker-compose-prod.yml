@@ -17,10 +17,6 @@ services:
       - internal
   app:
     build: .
-#    volumes:
-#      - .:/app
-#    working_dir: /app
-#    command: npm run prod
     depends_on:
       - prod-postgres
     ports:
