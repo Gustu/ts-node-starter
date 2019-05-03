@@ -7,6 +7,7 @@ import cors from 'cors';
 import logger from 'morgan';
 import {InternalServerError, NotFoundError} from "./errors";
 import rateLimit from 'express-rate-limit';
+import helmet from 'helmet';
 
 const app: express.Application = express();
 
@@ -14,6 +15,7 @@ app.use(rateLimit({
     windowMs: 5 * 60 * 1000,
     max: 20
 }));
+app.use(helmet());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(cors());

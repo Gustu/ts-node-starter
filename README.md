@@ -35,3 +35,6 @@ Example api made with Node, Express, Typescript and TypeORM.
 `POST /api/comments` - create a new movie comment
 
 Rate limit - 20 req / 5 min
+
+**TODO**
+- API documentation
