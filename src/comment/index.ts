@@ -3,12 +3,29 @@ import {CommentJSON, Json} from '../types';
 import CommentRepository from './CommentRepository';
 import Comment from '../entity/comment.entity';
 import asyncMiddleware from "../middleware/async";
+import {body, param, query} from "express-validator/check";
 
-//////////////////////////////////////////////
+const getMovieCommentsValidation = [
+    param('movieId').exists().isInt()
+];
 
-const restRouter = Router({mergeParams: true});
+const createCommentValidation = [
+    param('movieId').exists().isInt(),
+    body('username').exists().isString().isLength({min: 1, max: 255}),
+    body('message').exists().isString().isLength({min: 1, max: 255}),
+];
 
-restRouter.post('/', asyncMiddleware(async (req, res) => {
+const createMovieNotRestValidation = [
+    body('movieId').exists().isInt(),
+    body('username').exists().isString().isLength({min: 1, max: 255}),
+    body('message').exists().isString().isLength({min: 1, max: 255}),
+];
+
+const getAllOrMovieCommentsValidation = [
+    query('movieId').optional().isInt(),
+];
+
+const createComment = asyncMiddleware(async (req, res) => {
     const {movieId} = req.params;
     const comment = Object.assign(new CommentJSON(), req.body, {movieId});
 
@@ -17,21 +34,17 @@ restRouter.post('/', asyncMiddleware(async (req, res) => {
     );
 
     res.send(Json.ok(newComment));
-}));
+});
 
-restRouter.get('/', asyncMiddleware(async (req, res) => {
+const getMovieComments = asyncMiddleware(async (req, res) => {
     const {movieId} = req.params;
 
     const comments = await CommentRepository.getMovieComments(movieId);
 
     res.send(Json.ok(comments));
-}));
+});
 
-//////////////////////////////////////////////
-
-const router = Router();
-
-router.get('/', asyncMiddleware(async (req, res) => {
+const getAllOrMovieComments = asyncMiddleware(async (req, res) => {
     const {movieId} = req.query;
     let comments = [];
 
@@ -42,9 +55,9 @@ router.get('/', asyncMiddleware(async (req, res) => {
     }
 
     res.send(Json.ok(comments));
-}));
+});
 
-router.post('/', asyncMiddleware(async (req, res) => {
+const createMovieNotRest = asyncMiddleware(async (req, res) => {
     const comment = Object.assign(new CommentJSON(), req.body);
 
     const newComment = await CommentRepository.createComment(
@@ -52,8 +65,15 @@ router.post('/', asyncMiddleware(async (req, res) => {
     );
 
     res.send(Json.ok(newComment));
-}));
+});
 
-//////////////////////////////////////////////
+const restRouter = Router({mergeParams: true});
+const router = Router();
+
+restRouter.post('/', createCommentValidation, createComment);
+restRouter.get('/', getMovieCommentsValidation, getMovieComments);
+
+router.get('/', getAllOrMovieCommentsValidation, getAllOrMovieComments);
+router.post('/', createMovieNotRestValidation, createMovieNotRest);
 
 export default {restRouter, router};

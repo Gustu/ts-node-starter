@@ -1,8 +1,13 @@
 import express from "express";
-import {Json} from "../types";
-import {InternalServerError} from "../errors";
+import {InternalServerError, ValidationError} from "../errors";
+import {validationResult} from "express-validator/check";
 
 const asyncMiddleware = (fn) => (req: express.Request, res: express.Response, next) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(422).json(new ValidationError(errors.array()));
+    }
+
     Promise
         .resolve(fn(req, res, next))
         .catch(err => {
