@@ -37,4 +37,6 @@ Example api made with Node, Express, Typescript and TypeORM.
 Rate limit - 20 req / 5 min
 
 **TODO**
-- API documentation
+- *real* API documentation
+- caching
+- circuit breaker
