@@ -1,6 +1,8 @@
-**Typescript Node API Starter**
+# Typescript Node API Starter
 
 Typescript Node API Starter made with Node, Express, Typescript, TypeORM and Docker.
+
+## Getting started
 
 **Dev setup**
 1. Create POSTGRES_USER, POSTGRES_PASSWORD, POSTGRES_DB env variables
@@ -36,7 +38,7 @@ Typescript Node API Starter made with Node, Express, Typescript, TypeORM and Doc
 
 Rate limit - 20 req / 5 min
 
-**TODO**
-- *real* API documentation
-- caching
-- circuit breaker
+## TODO
+- Swagger API documentation
+- Caching
+- Circuit breaker
