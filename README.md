@@ -1,6 +1,6 @@
-**MOVIEDB API**
+**Typescript Node API Starter**
 
-Example api made with Node, Express, Typescript and TypeORM.
+Typescript Node API Starter made with Node, Express, Typescript, TypeORM and Docker.
 
 **Dev setup**
 1. Create POSTGRES_USER, POSTGRES_PASSWORD, POSTGRES_DB env variables
