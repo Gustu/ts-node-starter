@@ -37,7 +37,7 @@
     "superagent": "^5.0.3",
     "tslint": "^5.16.0",
     "tslint-config-airbnb": "^5.11.1",
-    "typeorm": "^0.2.16",
+    "typeorm": "^0.2.25",
     "typescript": "^3.4.5"
   },
   "devDependencies": {
